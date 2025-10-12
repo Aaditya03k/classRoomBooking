@@ -14,6 +14,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'classroom-booking/build')));
+
+// All GET requests that aren’t API calls return React’s index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'classroom-booking/build', 'index.html'));
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 
@@ -21,6 +28,7 @@ app.use("/api/rooms", roomRoutes);
 //app.use("/api/bookings", bookingRoutes);
 app.use("/api", searchRoutes); // ✅ mount the search route
 app.use("/api/bookings", bookingRoutes);
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
