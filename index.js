@@ -14,12 +14,10 @@ const app = express();
 app.use(cors());
 
 
-app.use(express.static(path.join(__dirname, 'classroom-booking/build')));
+
 
 // All GET requests that aren’t API calls return React’s index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'classroom-booking/build', 'index.html'));
-});
+
 
 // Routes
 app.use("/api/auth", authRoutes);
